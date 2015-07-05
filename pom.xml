@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.playn</groupId>
+    <groupId>com.googlecode.playn</groupId>
     <artifactId>playn-project</artifactId>
-    <version>2.0-rc1</version>
+    <version>1.8.5</version>
   </parent>
 
   <groupId>com.hanabi</groupId>
@@ -14,7 +14,9 @@
   <name>HanabiGame Metaproject</name>
 
   <properties>
-    <playn.version>2.0-rc1</playn.version>
+    <playn.version>1.8.5</playn.version>
+    <ooo.version>1.8.5</ooo.version>
+    <tuxlib.version>1.8.5</tuxlib.version>
   </properties>
 
   <profiles>
@@ -42,6 +44,7 @@
   </profiles>
   <modules>
     <module>assets</module>
+	<module>tuxlib</module>
     <module>core</module>
   </modules>
 </project>

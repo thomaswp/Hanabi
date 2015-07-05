@@ -15,14 +15,19 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.playn</groupId>
-      <artifactId>playn-scene</artifactId>
+      <groupId>com.googlecode.playn</groupId>
+      <artifactId>playn-core</artifactId>
       <version>${playn.version}</version>
     </dependency>
 	<dependency>
       <groupId>com.threerings</groupId>
       <artifactId>tripleplay</artifactId>
       <version>${playn.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tuxkids</groupId>
+      <artifactId>tuxlib-core</artifactId>
+      <version>${tuxlib.version}</version>
     </dependency>
   </dependencies>
 
