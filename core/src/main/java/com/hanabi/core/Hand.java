@@ -23,7 +23,7 @@ public class Hand {
 	public Hand hint(Hint hint, boolean[] affected) {
 		Hand hand = clone();
 		for (int i = 0; i < size; i++) {
-			if (!hand.cards[i].hint(hint)) return null;
+			if (!hand.cards[i].hint(hint, affected[i])) return null;
 		}
 		return hand;
 	}

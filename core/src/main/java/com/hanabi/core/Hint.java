@@ -3,20 +3,17 @@ package com.hanabi.core;
 import com.hanabi.core.Card.Color;
 
 public class Hint {
-	public final boolean positive;
 	public final Color color;
 	public final Integer number;
 	
-	public Hint(Color color, boolean positive) {
+	public Hint(Color color) {
 		this.color = color;
 		this.number = null;
-		this.positive = positive;
 	}
 	
-	public Hint(int number, boolean positive) {
+	public Hint(int number) {
 		this.color = null;
 		this.number = number;
-		this.positive = positive;
 	}
 	
 	public boolean isColorHint() {

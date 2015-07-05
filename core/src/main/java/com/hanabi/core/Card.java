@@ -58,9 +58,9 @@ public class Card {
 		return Answer.Maybe;
 	}
 	
-	public boolean hint(Hint hint) {
-		if (hint.isColorHint()) return hint(hint.color, hint.positive);
-		return hint(hint.number, hint.positive);
+	public boolean hint(Hint hint, boolean positive) {
+		if (hint.isColorHint()) return hint(hint.color, positive);
+		return hint(hint.number, positive);
 	}
 	
 	private boolean hint(Color color, boolean positive) {	
