@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import playn.core.GroupLayer;
+import playn.core.util.Clock;
 
 import com.tuxlib.util.layer.LayerWrapper;
 
@@ -33,11 +34,19 @@ public class GameLayer extends LayerWrapper {
 		for (CardLayer cl : cardLayers) cl.destroy();
 		cardLayers.clear();
 		
-		float cardsWidth = width * 0.8f;
+		float cardsWidth = width;
 		float cWidth = cardsWidth * 0.8f / hand.size;
 		for (int i = 0; i < hand.size; i++) {
 			CardLayer cl = new CardLayer(hand.cards[i], cWidth);
-			cl.setTranslation(cardsWidth * (i + 0.5f) / hand.size, height / 2);
+			cl.setTranslation(cardsWidth * (i + 0.5f) / hand.size, height * 0.75f);
+			layer.add(cl.layerAddable());
+			cardLayers.add(cl);
+		}
+	}
+
+	public void paint(Clock clock) {
+		for (CardLayer layer : cardLayers) {
+			layer.paint(clock);
 		}
 	}
 
