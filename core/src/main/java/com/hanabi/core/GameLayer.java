@@ -25,12 +25,18 @@ public class GameLayer extends GroupLayerWrapper {
 		this.height = height;
 		this.hand = new Hand(cards);
 		
+		actionLayer = graphics().createGroupLayer();
+		layer.add(actionLayer);
+		
+		createActionButtons(width, height);
+		
+		reset();
+	}
+
+	private void createActionButtons(float width, float height) {
 		float mWidth = width * 1f;
 		float buttonWidth = mWidth * 0.25f, buttonHeight = height * 0.3f;
 		float spacing = (mWidth - buttonWidth * 3) / 4;
-		
-		actionLayer = graphics().createGroupLayer();
-		layer.add(actionLayer);
 		
 		Button buttonHint = new Button(buttonWidth, buttonHeight, "Hint!");
 		buttonHint.setTranslation(spacing + buttonWidth * 0.5f, height * 0.25f);
@@ -47,8 +53,6 @@ public class GameLayer extends GroupLayerWrapper {
 		Button buttonRedo = new Button(buttonWidth, buttonHeight * 0.45f, "Redo");
 		buttonRedo.setTranslation(3 * spacing + buttonWidth * 2.5f, height * 0.25f + buttonHeight * 0.275f);
 		actionLayer.add(buttonRedo.layerAddable());
-		
-		reset();
 	}
 
 	private void reset() {
