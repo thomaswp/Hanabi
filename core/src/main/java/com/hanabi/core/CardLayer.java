@@ -2,10 +2,6 @@ package com.hanabi.core;
 
 import static playn.core.PlayN.assets;
 import static playn.core.PlayN.graphics;
-
-import java.rmi.registry.LocateRegistry;
-
-import playn.core.GroupLayer;
 import playn.core.Image;
 import playn.core.ImageLayer;
 import playn.core.Pointer;
@@ -14,13 +10,12 @@ import playn.core.util.Clock;
 
 import com.tuxlib.util.ImageCallback;
 import com.tuxlib.util.Lerp;
-import com.tuxlib.util.layer.LayerWrapper;
+import com.tuxlib.util.layer.GroupLayerWrapper;
 
-public class CardLayer extends LayerWrapper {
+public class CardLayer extends GroupLayerWrapper {
 	
 	public final float width;
 	
-	private final GroupLayer layer;
 	private final ImageLayer cardBackLayer;
 	
 	private Card card;
@@ -31,8 +26,6 @@ public class CardLayer extends LayerWrapper {
 	}
 	
 	public CardLayer(Card card, float width) {
-		super(graphics().createGroupLayer());
-		layer = (GroupLayer) layerAddable();
 		this.width = width;
 		
 		Image backImage = assets().getImage("images/back.png");
@@ -66,8 +59,7 @@ public class CardLayer extends LayerWrapper {
 	}
 
 	public void paint(Clock clock) {
-		float targetScale = 1;
-		if (active) targetScale = (float) (1 + Math.abs(1 - Math.sin(clock.time() / 1000 * Math.PI)) * 0.075f);
+		float targetScale = active ? 1.1f : 1;
 		layer.setScale(Lerp.lerp(layer.scaleX(), targetScale, 0.1f));
 	}
 

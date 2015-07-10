@@ -2,12 +2,10 @@ package com.hanabi.core;
 
 import static playn.core.PlayN.assets;
 import static playn.core.PlayN.graphics;
-
-import com.tuxlib.util.SolidClock;
-
 import playn.core.Game;
 import playn.core.ImageLayer;
-import playn.core.util.Clock;
+
+import com.tuxlib.util.SolidClock;
 
 public class HanabiGame extends Game.Default {
 	
