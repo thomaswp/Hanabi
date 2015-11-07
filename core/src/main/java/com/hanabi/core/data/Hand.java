@@ -1,4 +1,4 @@
-package com.hanabi.core;
+package com.hanabi.core.data;
 
 
 public class Hand {

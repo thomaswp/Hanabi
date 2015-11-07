@@ -1,6 +1,6 @@
-package com.hanabi.core;
+package com.hanabi.core.data;
 
-import com.hanabi.core.Card.Color;
+import com.hanabi.core.data.Card.Color;
 
 public class Hint {
 	public final Color color;

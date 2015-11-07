@@ -1,4 +1,4 @@
-package com.hanabi.core;
+package com.hanabi.core.data;
 
 import java.util.HashSet;
 import java.util.Set;

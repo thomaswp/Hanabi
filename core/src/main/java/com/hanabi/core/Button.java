@@ -22,11 +22,16 @@ public class Button extends GroupLayerWrapper {
 	private final ImageLayer textLayer;
 	
 	private String text;
+	private boolean enabled = true;
 	
 	public Runnable onClicked;
 	
 	public String text() {
 		return text;
+	}
+	
+	public boolean enabled() {
+		return enabled;
 	}
 	
 	public void setText(String text) {
@@ -62,10 +67,12 @@ public class Button extends GroupLayerWrapper {
 	}
 	
 	private void buttonPressed(Event event) {
+		if (!enabled) return;
 		layer.setTint(Color.rgb(200, 200, 200));
 	}
 
 	private void buttonReleased(Event event) {
+		if (!enabled) return;
 		layer.setTint(Colors.WHITE);
 		
 		float x = event.localX(), y = event.localY();
@@ -83,6 +90,11 @@ public class Button extends GroupLayerWrapper {
 	private Image createImage() {
 		return CanvasUtils.createRoundRect(width, height, height * 0.1f, 
 				Colors.LIGHT_GRAY, 2, Colors.BLACK);
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+		layer.setTint(enabled ? Colors.WHITE : Color.rgb(200, 200, 200));
 	}
 
 }

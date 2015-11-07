@@ -24,7 +24,7 @@ public class HanabiGame extends Game.Default {
 		bg.setSize(graphics().width(), graphics().height());
 		graphics().rootLayer().add(bg);
 
-		gameLayer = new GameLayer(5 , graphics().width(), graphics().height());
+		gameLayer = new GameLayer(4 , graphics().width(), graphics().height());
 		graphics().rootLayer().add(gameLayer.layerAddable());
 
 	}
