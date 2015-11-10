@@ -6,6 +6,7 @@ import playn.core.Game;
 import playn.core.ImageLayer;
 
 import com.tuxlib.util.SolidClock;
+import com.tuxlib.util.Updater;
 
 public class HanabiGame extends Game.Default {
 	
@@ -40,6 +41,7 @@ public class HanabiGame extends Game.Default {
 	public void paint(float alpha) {
 		super.paint(alpha);
 		clock.paint(alpha);
+		Updater.paint(clock);
 		gameLayer.paint(clock);
 	}
 }

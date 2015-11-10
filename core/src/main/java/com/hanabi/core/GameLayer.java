@@ -10,6 +10,9 @@ import playn.core.util.Clock;
 
 import com.hanabi.core.data.Hand;
 import com.tuxlib.util.layer.GroupLayerWrapper;
+import com.tuxlib.util.layer.LayerState;
+import com.tuxlib.util.layer.LayerState.FloatProperty;
+import com.tuxlib.util.layer.LayerUtils;
 
 public class GameLayer extends GroupLayerWrapper {
 
@@ -95,7 +98,28 @@ public class GameLayer extends GroupLayerWrapper {
 	}
 	
 	private void finishPlaying() {
-		cancelAction();
+		hinting = playing = false;
+		for (int i = 0; i < hand.size; i++) {
+			if (cardLayers.get(i).active) {
+				hand.discard(i);
+				final CardLayer cl = cardLayers.remove(i);
+				cardLayers.add(0, null);
+				
+				LayerState out = new LayerState();
+				out.addFloatProperty(FloatProperty.ScaleX, 0);
+				out.addFloatProperty(FloatProperty.ScaleY, 0);
+				out.addFloatProperty(FloatProperty.Alpha, 0.4f);
+				LayerUtils.lerpState(cl.layerAddable(), out, 0.99f, new Runnable() {
+					@Override
+					public void run() {
+						cardsLayer.remove(cl.layerAddable());
+						layoutCards(true);
+						cancelAction();
+					}
+				});
+				break;
+			}
+		}
 	}
 	
 	private void startAction(String action) {
@@ -107,7 +131,7 @@ public class GameLayer extends GroupLayerWrapper {
 	
 	private void cancelAction() {
 		cardsLayer.setInteractive(false);
-		for (int i = 0; i < hand.size; i++) {
+		for (int i = 0; i < cardLayers.size(); i++) {
 			cardLayers.get(i).active = false;
 		}
 		hinting = playing = false;
@@ -130,13 +154,37 @@ public class GameLayer extends GroupLayerWrapper {
 	private void reset() {
 		for (CardLayer cl : cardLayers) cl.destroy();
 		cardLayers.clear();
-		
+		for (int i = 0; i < hand.size; i++) {
+			cardLayers.add(null);
+		}
+		cardsLayer.setInteractive(false);
+		layoutCards(false);
+	}
+	
+	private void layoutCards(boolean lerp) {
 		float cardsWidth = width;
 		float cWidth = cardsWidth * 0.8f / hand.size;
 		cardHeight = cWidth * CardLayer.ASPECT_RATIO;
 		for (int i = 0; i < hand.size; i++) {
-			CardLayer cl = new CardLayer(hand.cards[i], cWidth);
-			cl.setTranslation(cardsWidth * (i + 0.5f) / hand.size, height * 0.95f - cl.height * 0.5f);
+			float y = height * 0.95f - cardHeight * 0.5f;
+			float x = cardsWidth * (i + 0.5f) / hand.size;
+			float left = -cWidth * 1.3f;
+			
+			CardLayer cl = cardLayers.get(i);
+			if (cl == null) {
+				cl = new CardLayer(hand.cards[i], cWidth);
+				cl.setTranslation(left, y);
+				cardLayers.set(i, cl);
+			}
+			
+			LayerState state = new LayerState();
+			state.addFloatProperty(FloatProperty.TX, x);
+			if (lerp) {
+				LayerUtils.lerpState(cl.layerAddable(), state, 0.99f);
+			} else {
+				state.set(cl.layerAddable());
+			}
+			
 			cardsLayer.add(cl.layerAddable());
 			cardLayers.add(cl);
 			
@@ -148,13 +196,11 @@ public class GameLayer extends GroupLayerWrapper {
 				}
 			};
 		}
-		
-		cardsLayer.setInteractive(false);
 	}
 
 	public void paint(Clock clock) {
 		for (CardLayer layer : cardLayers) {
-			layer.paint(clock);
+			if (layer != null) layer.paint(clock);
 		}
 	}
 

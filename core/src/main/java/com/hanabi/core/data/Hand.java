@@ -34,4 +34,11 @@ public class Hand {
 		}
 		cards[size - 1] = new Card();
 	}
+
+	public void discard(int index) {
+		for (int i = 0; i < index; i++) {
+			cards[i + 1] = cards[i];
+		}
+		cards[0] = new Card();
+	}
 }
